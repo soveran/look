@@ -1,5 +1,4 @@
 require File.join(File.dirname(__FILE__), "test_helper")
-require "ruby-debug"
 
 class TestLook < Test::Unit::TestCase
   context "loading libraries" do
