@@ -8,17 +8,21 @@ class TestLook < Test::Unit::TestCase
         Look.at
       end
 
-      assert_raises ArgumentError do
-        Look.at "nonexistent_directory"
-      end
+      # NOTE: this requirement was removed b/c it may be possible
+      # that a path that exists on one system might not exist on 
+      # another, but the program should work in either case.
+
+      #assert_raises ArgumentError do
+      #  Look.at "nonexistent_directory"
+      #end
     end
 
-    should "find the library once Look.at is executed" do
+    should "find the library once Look.at_vendor is executed" do
       assert_raises LoadError do
         require "foo"
       end
 
-      Look.at File.dirname(__FILE__)
+      Look.at_vendor File.dirname(__FILE__)
 
       assert_nothing_raised do
         require "foo"
@@ -26,7 +30,7 @@ class TestLook < Test::Unit::TestCase
     end
 
     should "load the file in vendor" do
-      Look.at File.dirname(__FILE__)
+      Look.at_vendor File.dirname(__FILE__)
 
       require "foo"
 
