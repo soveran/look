@@ -1,6 +1,7 @@
 require File.join(File.dirname(__FILE__), "test_helper")
 
-class TestLook < Test::Unit::TestCase
+class TestLookAt < Test::Unit::TestCase
+
   context "loading libraries" do
 
     should "raise an error if a directory is not provided" do
