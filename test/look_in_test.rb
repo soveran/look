@@ -1,14 +1,14 @@
 require File.join(File.dirname(__FILE__), "test_helper")
 
-describe "loading libraries with Look.at" do
+describe "loading libraries using Look.in" do
 
   fixture_directory = File.expand_path(
-    File.join(File.dirname(__FILE__), 'fixtures', 'at')
+    File.join(File.dirname(__FILE__), 'fixtures', 'in')
   )
 
   it "should raise an error if a directory is not provided" do
     assert_raises ArgumentError do
-      Look.at
+      Look.in
     end
 
     # NOTE: this requirement was removed b/c it may be possible
@@ -20,16 +20,23 @@ describe "loading libraries with Look.at" do
     #end
   end
 
-  it "should find the library once Look.at is executed" do
+  it "should find the library once Look.in is executed" do
     assert_raises LoadError do
-      require "fat"
+      require "fin"
     end
 
-    Look.at fixture_directory, 'vendor'
+    Look.in fixture_directory, 'vendor', 'fin', 'lib'
 
-    require "fat"
+    require "fin"
+  end
 
-    assert_equal "Fat in vendor/fat/lib", Fat
+  it "should accept a custom glob" do
+    Look.in fixture_directory, "gems/*/lib"
+
+    require "bar"
+
+    assert_equal "Bar in gems/bar-0.0.1/lib", Bar
   end
 
 end
+
