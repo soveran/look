@@ -1,13 +1,11 @@
 module Look
 
-  # Same as +Look.at+ but assume's the locations are vendered projects
-  # within the standard +vendor/+ directory. So, for example:
+  # Add vendered projects to load path. Dor example:
   #
-  #   Look.at_vendor File.dirname(__FILE__)
+  #   Look.at File.dirname(__FILE__), 'vendor'
   #
-  # is equivalent to:
-  #
-  #   Look.at File.dirname(__FILE__) + '/vendor/*/lib'
+  # Then any projects in the vendor directory will be accessible
+  # via require and load.
   #
   def self.at(*directory)
     raise ArgumentError if directory.empty?
