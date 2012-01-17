@@ -1,44 +1,40 @@
-require File.join(File.dirname(__FILE__), "test_helper")
+require File.expand_path("./helper", File.dirname(__FILE__))
 
-class TestLook < Test::Unit::TestCase
-  context "loading libraries" do
-
-    should "raise an error if a directory is not provided" do
-      assert_raises ArgumentError do
-        Look.at
-      end
-
-      assert_raises ArgumentError do
-        Look.at "nonexistent_directory"
-      end
+scope do
+  test "raise an error if a directory is not provided" do
+    assert_raise ArgumentError do
+      Look.at
     end
 
-    should "find the library once Look.at is executed" do
-      assert_raises LoadError do
-        require "foo"
-      end
-
-      Look.at File.dirname(__FILE__)
-
-      assert_nothing_raised do
-        require "foo"
-      end
+    assert_raise ArgumentError do
+      Look.at "nonexistent_directory"
     end
+  end
 
-    should "load the file in vendor" do
-      Look.at File.dirname(__FILE__)
-
+  test "find the library once Look.at is executed" do
+    begin
       require "foo"
-
-      assert_equal "Foo in vendor/foo/lib", Foo
+    rescue LoadError
     end
 
-    should "accept a custom glob" do
-      Look.at File.dirname(__FILE__), "gems/*/lib"
+    Look.at File.dirname(__FILE__)
 
-      require "bar"
+    require "foo"
+  end
 
-      assert_equal "Bar in gems/bar-0.0.1/lib", Bar
-    end
+  test "load the file in vendor" do
+    Look.at File.dirname(__FILE__)
+
+    require "foo"
+
+    assert_equal "Foo in vendor/foo/lib", Foo
+  end
+
+  test "accept a custom glob" do
+    Look.at File.dirname(__FILE__), "gems/*/lib"
+
+    require "bar"
+
+    assert_equal "Bar in gems/bar-0.0.1/lib", Bar
   end
 end
