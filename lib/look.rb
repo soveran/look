@@ -6,6 +6,6 @@ module Look
       raise ArgumentError, "#{dir} is not a directory"
     end
 
-    Dir[File.join(dir, glob)].each { |lib| $:.unshift(lib) }
+    $:.unshift(*Dir[File.join(dir, glob)])
   end
 end
